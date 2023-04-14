@@ -5,10 +5,9 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.util.Util;
 
 public class Main {
+    private static UserDao userDao = new UserDaoJDBCImpl();
     public static void main(String[] args) {
         Util.getConnection();
-
-        UserDao userDao = new UserDaoJDBCImpl();
 
         userDao.createUsersTable();
 
