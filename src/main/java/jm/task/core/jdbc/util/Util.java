@@ -32,24 +32,27 @@ public class Util {
     }
 
     public static SessionFactory getSessionFactory() {
-        try {
-            Configuration configuration = new Configuration()
-                    .setProperty("hibernate.connection.driver_class", DRIVER)
-                    .setProperty("hibernate.connection.url", HOST)
-                    .setProperty("hibernate.connection.username", LOGIN)
-                    .setProperty("hibernate.connection.password", PASSWORD)
-                    .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
-                    .setProperty("hibernate.current_session_context_class", "thread")
-                    .setProperty("hibernate.show_sql", "true")
-                    .addAnnotatedClass(User.class);
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties()).build();
-            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            System.out.println("Session OK");
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            System.out.println("Session ERROR");
+        if (sessionFactory == null) {
+            try {
+                Configuration configuration = new Configuration()
+                        .setProperty("hibernate.connection.driver_class", DRIVER)
+                        .setProperty("hibernate.connection.url", HOST)
+                        .setProperty("hibernate.connection.username", LOGIN)
+                        .setProperty("hibernate.connection.password", PASSWORD)
+                        .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect")
+                        .setProperty("hibernate.current_session_context_class", "thread")
+                        .setProperty("hibernate.show_sql", "true")
+                        .addAnnotatedClass(User.class);
+                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                        .applySettings(configuration.getProperties()).build();
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                System.out.println("Session OK");
+            } catch (HibernateException e) {
+                e.printStackTrace();
+                System.out.println("Session ERROR");
+            }
         }
         return sessionFactory;
     }
 }
+
