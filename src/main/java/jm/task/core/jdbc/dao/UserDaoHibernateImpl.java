@@ -51,6 +51,9 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
@@ -63,6 +66,9 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             System.out.println("User удален");
         } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
